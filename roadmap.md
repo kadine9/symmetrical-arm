@@ -1,4 +1,5 @@
 # Tasks
+
 - [ ] Add selected-link settings, persistence, and reset.
 - [ ] Test isolation and verify applying settings to selected links in the app.
 - [x] Add reusable destination folder choices.

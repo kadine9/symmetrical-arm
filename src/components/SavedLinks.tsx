@@ -1,17 +1,17 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { toast } from 'sonner'
-import { FolderOpen, Save, Trash2 } from 'lucide-react'
-import { autoSave, deleteBatch, listSaved, saveBatch } from '@/lib/saved.functions'
+import { useCallback, useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
+import { FolderOpen, Save, Trash2 } from "lucide-react";
+import { autoSave, deleteBatch, listSaved, saveBatch } from "@/lib/saved.functions";
 
-type Row = Awaited<ReturnType<typeof listSaved>>[number]
+type Row = Awaited<ReturnType<typeof listSaved>>[number];
 
 function getDeviceKey() {
-  let k = localStorage.getItem('lp_device')
+  let k = localStorage.getItem("lp_device");
   if (!k) {
-    k = crypto.randomUUID() + crypto.randomUUID()
-    localStorage.setItem('lp_device', k)
+    k = crypto.randomUUID() + crypto.randomUUID();
+    localStorage.setItem("lp_device", k);
   }
-  return k
+  return k;
 }
 
 export function SavedLinks({
@@ -19,63 +19,63 @@ export function SavedLinks({
   linkCount,
   onLoad,
 }: {
-  input: string
-  linkCount: number
-  onLoad: (content: string) => void
+  input: string;
+  linkCount: number;
+  onLoad: (content: string) => void;
 }) {
-  const [deviceKey, setDeviceKey] = useState('')
-  const [rows, setRows] = useState<Row[]>([])
-  const [title, setTitle] = useState('')
-  const [busy, setBusy] = useState(false)
+  const [deviceKey, setDeviceKey] = useState("");
+  const [rows, setRows] = useState<Row[]>([]);
+  const [title, setTitle] = useState("");
+  const [busy, setBusy] = useState(false);
 
   const refresh = useCallback(async (k: string) => {
     try {
-      setRows(await listSaved({ data: { deviceKey: k } }))
+      setRows(await listSaved({ data: { deviceKey: k } }));
     } catch {
-      toast.error('Could not load saved links')
+      toast.error("Could not load saved links");
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
-    const k = getDeviceKey()
-    setDeviceKey(k)
-    void refresh(k)
-  }, [refresh])
+    const k = getDeviceKey();
+    setDeviceKey(k);
+    void refresh(k);
+  }, [refresh]);
 
-  const [status, setStatus] = useState('')
-  const first = useRef(true)
+  const [status, setStatus] = useState("");
+  const first = useRef(true);
   // Auto-save the paste box 1.5s after it stops changing.
   useEffect(() => {
-    if (!deviceKey) return
+    if (!deviceKey) return;
     if (first.current) {
-      first.current = false
-      return
+      first.current = false;
+      return;
     }
-    if (!input.trim()) return
-    setStatus('Saving…')
+    if (!input.trim()) return;
+    setStatus("Saving…");
     const t = setTimeout(async () => {
       try {
         const res = await autoSave({
           data: {
             deviceKey,
-            id: localStorage.getItem('lp_autosave_id'),
+            id: localStorage.getItem("lp_autosave_id"),
             content: input,
             linkCount,
           },
-        })
-        localStorage.setItem('lp_autosave_id', res.id)
-        setStatus('Auto-saved ✓')
-        void refresh(deviceKey)
+        });
+        localStorage.setItem("lp_autosave_id", res.id);
+        setStatus("Auto-saved ✓");
+        void refresh(deviceKey);
       } catch {
-        setStatus('Auto-save failed')
+        setStatus("Auto-save failed");
       }
-    }, 1500)
-    return () => clearTimeout(t)
-  }, [input, linkCount, deviceKey, refresh])
+    }, 1500);
+    return () => clearTimeout(t);
+  }, [input, linkCount, deviceKey, refresh]);
 
   const save = async () => {
-    if (!input.trim()) return
-    setBusy(true)
+    if (!input.trim()) return;
+    setBusy(true);
     try {
       await saveBatch({
         data: {
@@ -84,26 +84,26 @@ export function SavedLinks({
           content: input,
           linkCount,
         },
-      })
-      setTitle('')
-      toast.success('Links saved')
-      await refresh(deviceKey)
+      });
+      setTitle("");
+      toast.success("Links saved");
+      await refresh(deviceKey);
     } catch {
-      toast.error('Could not save links')
+      toast.error("Could not save links");
     } finally {
-      setBusy(false)
+      setBusy(false);
     }
-  }
+  };
 
   const remove = async (id: string) => {
     try {
-      await deleteBatch({ data: { deviceKey, id } })
-      setRows((r) => r.filter((x) => x.id !== id))
-      if (localStorage.getItem('lp_autosave_id') === id) localStorage.removeItem('lp_autosave_id')
+      await deleteBatch({ data: { deviceKey, id } });
+      setRows((r) => r.filter((x) => x.id !== id));
+      if (localStorage.getItem("lp_autosave_id") === id) localStorage.removeItem("lp_autosave_id");
     } catch {
-      toast.error('Could not delete')
+      toast.error("Could not delete");
     }
-  }
+  };
 
   return (
     <div className="mt-4 border-t border-border pt-4">
@@ -124,9 +124,7 @@ export function SavedLinks({
           Save
         </button>
       </div>
-      {status && (
-        <p className="mt-2 text-xs font-semibold text-muted-foreground">{status}</p>
-      )}
+      {status && <p className="mt-2 text-xs font-semibold text-muted-foreground">{status}</p>}
       {rows.length > 0 && (
         <ul className="lp-scroll mt-3 max-h-56 space-y-1.5 overflow-auto">
           {rows.map((r) => (
@@ -159,5 +157,5 @@ export function SavedLinks({
         </ul>
       )}
     </div>
-  )
+  );
 }

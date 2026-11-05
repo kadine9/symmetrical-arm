@@ -1,48 +1,48 @@
 // src/components/SyncPanel.tsx
-import { useState } from 'react'
-import { toast } from 'sonner'
-import { Check, ClipboardCopy, Cloud, CloudOff, Loader2, TriangleAlert } from 'lucide-react'
-import { CODE_LEN, extractCode, workspaceUrl, type SyncStatus } from '@/lib/useSync'
+import { useState } from "react";
+import { toast } from "sonner";
+import { Check, ClipboardCopy, Cloud, CloudOff, Loader2, TriangleAlert } from "lucide-react";
+import { CODE_LEN, extractCode, workspaceUrl, type SyncStatus } from "@/lib/useSync";
 
 type Props = {
-  code: string | null
-  status: SyncStatus
-  onEnable: () => Promise<void>
-  onJoin: (code: string) => Promise<void>
-  onDisconnect: (deleteRemote: boolean) => Promise<void>
-}
+  code: string | null;
+  status: SyncStatus;
+  onEnable: () => Promise<void>;
+  onJoin: (code: string) => Promise<void>;
+  onDisconnect: (deleteRemote: boolean) => Promise<void>;
+};
 
 export function SyncPanel({ code, status, onEnable, onJoin, onDisconnect }: Props) {
-  const [entry, setEntry] = useState('')
-  const [busy, setBusy] = useState(false)
+  const [entry, setEntry] = useState("");
+  const [busy, setBusy] = useState(false);
 
   const run = async (fn: () => Promise<void>) => {
-    setBusy(true)
+    setBusy(true);
     try {
-      await fn()
+      await fn();
     } catch {
-      toast.error('Something went wrong — try again')
+      toast.error("Something went wrong — try again");
     } finally {
-      setBusy(false)
+      setBusy(false);
     }
-  }
+  };
 
   const copyCode = async () => {
-    if (!code) return
+    if (!code) return;
     try {
-      await navigator.clipboard.writeText(workspaceUrl(code))
-      toast.success('Workspace link copied')
+      await navigator.clipboard.writeText(workspaceUrl(code));
+      toast.success("Workspace link copied");
     } catch {
-      toast.error('Clipboard blocked — select the code and copy manually')
+      toast.error("Clipboard blocked — select the code and copy manually");
     }
-  }
+  };
 
   const statusLabel = {
-    off: '',
-    syncing: 'Syncing…',
-    synced: 'Synced',
-    error: 'Offline — will retry',
-  }[status]
+    off: "",
+    syncing: "Syncing…",
+    synced: "Synced",
+    error: "Offline — will retry",
+  }[status];
 
   return (
     <section className="lp-card p-5">
@@ -54,7 +54,8 @@ export function SyncPanel({ code, status, onEnable, onJoin, onDisconnect }: Prop
       {!code ? (
         <>
           <p className="mb-3 text-sm text-muted-foreground">
-            Keep your links and settings the same on every device. No account — just a private workspace link.
+            Keep your links and settings the same on every device. No account — just a private
+            workspace link.
           </p>
           <button
             disabled={busy}
@@ -80,9 +81,14 @@ export function SyncPanel({ code, status, onEnable, onJoin, onDisconnect }: Prop
               disabled={busy || extractCode(entry).length !== CODE_LEN}
               onClick={() =>
                 run(async () => {
-                  if (!window.confirm('This replaces the data on this device with the synced copy. Continue?')) return
-                  await onJoin(entry)
-                  setEntry('')
+                  if (
+                    !window.confirm(
+                      "This replaces the data on this device with the synced copy. Continue?",
+                    )
+                  )
+                    return;
+                  await onJoin(entry);
+                  setEntry("");
                 })
               }
               className="rounded-full border-[1.5px] border-border bg-white px-4 py-2 text-sm font-bold hover:bg-purple-50 disabled:opacity-40"
@@ -94,14 +100,14 @@ export function SyncPanel({ code, status, onEnable, onJoin, onDisconnect }: Prop
       ) : (
         <>
           <div className="mb-3 flex items-center gap-2 text-sm text-muted-foreground">
-            {status === 'syncing' && <Loader2 className="size-4 animate-spin" />}
-            {status === 'synced' && <Check className="size-4 text-emerald-600" />}
-            {status === 'error' && <TriangleAlert className="size-4 text-amber-600" />}
+            {status === "syncing" && <Loader2 className="size-4 animate-spin" />}
+            {status === "synced" && <Check className="size-4 text-emerald-600" />}
+            {status === "error" && <TriangleAlert className="size-4 text-amber-600" />}
             {statusLabel}
           </div>
           <div className="flex items-center gap-2">
             <code className="lp-code min-w-0 flex-1 truncate rounded-full border border-border bg-white px-4 py-2 text-sm font-bold tracking-wider text-purple-800">
-              {workspaceUrl(code).replace(/^https?:\/\//, '')}
+              {workspaceUrl(code).replace(/^https?:\/\//, "")}
             </code>
             <button
               onClick={copyCode}
@@ -112,7 +118,8 @@ export function SyncPanel({ code, status, onEnable, onJoin, onDisconnect }: Prop
             </button>
           </div>
           <p className="mt-2 text-xs text-muted-foreground">
-            Open this link on your other devices (or bookmark it) to use the same workspace. Anyone with the link can read and change your synced data, so keep it private.
+            Open this link on your other devices (or bookmark it) to use the same workspace. Anyone
+            with the link can read and change your synced data, so keep it private.
           </p>
           <div className="mt-3 flex flex-wrap gap-2 text-sm">
             <button
@@ -127,8 +134,13 @@ export function SyncPanel({ code, status, onEnable, onJoin, onDisconnect }: Prop
               disabled={busy}
               onClick={() =>
                 run(async () => {
-                  if (!window.confirm('Delete the synced copy from the server and disconnect? Other devices keep their local data but stop syncing.')) return
-                  await onDisconnect(true)
+                  if (
+                    !window.confirm(
+                      "Delete the synced copy from the server and disconnect? Other devices keep their local data but stop syncing.",
+                    )
+                  )
+                    return;
+                  await onDisconnect(true);
                 })
               }
               className="rounded-full border border-rose-200 bg-white px-3 py-1.5 font-semibold text-rose-600 hover:bg-rose-50"
@@ -139,7 +151,7 @@ export function SyncPanel({ code, status, onEnable, onJoin, onDisconnect }: Prop
         </>
       )}
     </section>
-  )
+  );
 }
 
 /* ──────────────────────────────────────────────────────────────────────────
