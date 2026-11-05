@@ -1,0 +1,426 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Design system definition.
+ *
+ * The @theme inline block maps CSS custom properties to Tailwind utility
+ * classes (e.g. --color-primary -> bg-primary, text-primary).
+ *
+ * The :root and .dark blocks define the actual color values using oklch.
+ * All colors MUST use oklch format.
+ *
+ * To add a new semantic color:
+ * 1. Add the variable to :root (light value) and .dark (dark value)
+ * 2. Register it in @theme inline as --color-<name>: var(--<name>)
+ */
+
+@theme inline {
+  --font-display: "Fredoka", ui-rounded, system-ui, sans-serif;
+  --font-sans: "Nunito", ui-rounded, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --container-content: 80rem;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --radius: 1rem;
+  --background: oklch(0.975 0.015 320);
+  --foreground: oklch(0.25 0.08 300);
+  --card: oklch(1 0 0 / 0.85);
+  --card-foreground: oklch(0.25 0.08 300);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.25 0.08 300);
+  --primary: oklch(0.55 0.24 305);
+  --primary-foreground: oklch(0.99 0.01 320);
+  --secondary: oklch(0.95 0.03 320);
+  --secondary-foreground: oklch(0.3 0.1 300);
+  --muted: oklch(0.95 0.02 315);
+  --muted-foreground: oklch(0.5 0.07 305);
+  --accent: oklch(0.93 0.05 330);
+  --accent-foreground: oklch(0.3 0.1 300);
+  --destructive: oklch(0.6 0.22 20);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.88 0.05 310);
+  --input: oklch(0.88 0.05 310);
+  --ring: oklch(0.6 0.2 305);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.984 0.003 247.858);
+  --sidebar-foreground: oklch(0.129 0.042 264.695);
+  --sidebar-primary: oklch(0.208 0.042 265.755);
+  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-accent: oklch(0.968 0.007 247.896);
+  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
+  --sidebar-border: oklch(0.929 0.013 255.508);
+  --sidebar-ring: oklch(0.704 0.04 256.788);
+}
+
+.dark {
+  --background: oklch(0.129 0.042 264.695);
+  --foreground: oklch(0.984 0.003 247.858);
+  --card: oklch(0.208 0.042 265.755);
+  --card-foreground: oklch(0.984 0.003 247.858);
+  --popover: oklch(0.208 0.042 265.755);
+  --popover-foreground: oklch(0.984 0.003 247.858);
+  --primary: oklch(0.929 0.013 255.508);
+  --primary-foreground: oklch(0.208 0.042 265.755);
+  --secondary: oklch(0.279 0.041 260.031);
+  --secondary-foreground: oklch(0.984 0.003 247.858);
+  --muted: oklch(0.279 0.041 260.031);
+  --muted-foreground: oklch(0.704 0.04 256.788);
+  --accent: oklch(0.279 0.041 260.031);
+  --accent-foreground: oklch(0.984 0.003 247.858);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.984 0.003 247.858);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.551 0.027 264.364);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.208 0.042 265.755);
+  --sidebar-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-accent: oklch(0.279 0.041 260.031);
+  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.551 0.027 264.364);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+  }
+}
+
+@layer base {
+  body {
+    font-family: var(--font-sans);
+  }
+}
+
+.lp-bg {
+  background:
+    radial-gradient(55rem 30rem at 0% -5%, oklch(0.92 0.14 335 / 0.75), transparent 60%),
+    radial-gradient(50rem 30rem at 100% 10%, oklch(0.92 0.13 270 / 0.7), transparent 60%),
+    radial-gradient(45rem 30rem at 15% 45%, oklch(0.94 0.12 165 / 0.55), transparent 60%),
+    radial-gradient(55rem 35rem at 85% 65%, oklch(0.95 0.14 55 / 0.55), transparent 60%),
+    radial-gradient(60rem 30rem at 50% 100%, oklch(0.93 0.12 305 / 0.65), transparent 60%),
+    oklch(0.985 0.015 320);
+}
+
+.lp-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid oklch(0.88 0.07 310 / 0.9);
+  border-radius: 2rem;
+  box-shadow:
+    0 16px 36px -12px oklch(0.55 0.22 305 / 0.16),
+    0 4px 12px -2px oklch(0.4 0.1 300 / 0.05),
+    inset 0 1px 1px rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(16px);
+  transition:
+    transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.22s ease,
+    border-color 0.2s ease;
+}
+.lp-card:hover {
+  box-shadow:
+    0 20px 42px -12px oklch(0.55 0.25 305 / 0.22),
+    0 6px 16px -2px oklch(0.4 0.1 300 / 0.08),
+    inset 0 1px 1px rgba(255, 255, 255, 1);
+}
+
+/* Card color personalities */
+.card-theme-berry {
+  border-color: oklch(0.85 0.12 335 / 0.9);
+  box-shadow:
+    0 16px 36px -12px oklch(0.65 0.22 335 / 0.2),
+    0 4px 12px -2px oklch(0.4 0.1 335 / 0.06);
+}
+.card-theme-peach {
+  border-color: oklch(0.86 0.13 50 / 0.9);
+  box-shadow:
+    0 16px 36px -12px oklch(0.7 0.2 50 / 0.2),
+    0 4px 12px -2px oklch(0.4 0.1 50 / 0.06);
+}
+.card-theme-violet {
+  border-color: oklch(0.85 0.12 280 / 0.9);
+  box-shadow:
+    0 16px 36px -12px oklch(0.65 0.22 280 / 0.2),
+    0 4px 12px -2px oklch(0.4 0.1 280 / 0.06);
+}
+.card-theme-mint {
+  border-color: oklch(0.86 0.12 165 / 0.9);
+  box-shadow:
+    0 16px 36px -12px oklch(0.65 0.2 165 / 0.2),
+    0 4px 12px -2px oklch(0.4 0.1 165 / 0.06);
+}
+
+.lp-btn-pri {
+  background: linear-gradient(135deg, oklch(0.66 0.26 335), oklch(0.54 0.26 295));
+  color: #ffffff;
+  box-shadow:
+    0 4px 16px -2px oklch(0.58 0.26 315 / 0.45),
+    0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.lp-btn-pri:hover:not(:disabled) {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow:
+    0 8px 24px -2px oklch(0.58 0.28 315 / 0.6),
+    0 2px 6px rgba(0, 0, 0, 0.08);
+}
+.lp-btn-pri:active:not(:disabled) {
+  transform: translateY(0.5px) scale(0.98);
+}
+
+.lp-btn-candy-peach {
+  background: linear-gradient(135deg, oklch(0.75 0.2 55), oklch(0.68 0.24 35));
+  color: #ffffff;
+  box-shadow: 0 4px 14px -2px oklch(0.7 0.22 45 / 0.45);
+}
+.lp-btn-candy-peach:hover:not(:disabled) {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 20px -2px oklch(0.7 0.24 45 / 0.55);
+}
+
+.lp-btn-candy-mint {
+  background: linear-gradient(135deg, oklch(0.72 0.2 165), oklch(0.6 0.22 185));
+  color: #ffffff;
+  box-shadow: 0 4px 14px -2px oklch(0.68 0.2 170 / 0.45);
+}
+.lp-btn-candy-mint:hover:not(:disabled) {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 20px -2px oklch(0.68 0.22 170 / 0.55);
+}
+
+.lp-code {
+  font-family: var(--font-mono);
+}
+
+.lp-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: oklch(0.75 0.16 315) transparent;
+}
+.lp-scroll::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+.lp-scroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, oklch(0.75 0.18 335), oklch(0.65 0.2 280));
+  border-radius: 9999px;
+  border: 1.5px solid rgba(255, 255, 255, 0.7);
+}
+.lp-scroll::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.58 0.24 305);
+}
+
+/* Die-cut stickers with vibrant white borders & dual drop shadows */
+.sticker {
+  display: inline-block;
+  user-select: none;
+  filter: drop-shadow(0 2.5px 0 white) drop-shadow(0 -2px 0 white) drop-shadow(2px 0 0 white)
+    drop-shadow(-2px 0 0 white) drop-shadow(0 5px 10px oklch(0.4 0.16 300 / 0.28));
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.sticker:hover {
+  transform: scale(1.22) rotate(var(--r, 8deg));
+}
+
+/* Cute die-cut vinyl sticker badge for labels and numbers */
+.sticker-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid white;
+  border-radius: 9999px;
+  font-weight: 800;
+  box-shadow:
+    0 2.5px 0 0.5px rgba(0, 0, 0, 0.08),
+    0 5px 12px -2px oklch(0.5 0.18 305 / 0.25);
+  user-select: none;
+  transition:
+    transform 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.18s ease;
+}
+.sticker-badge:hover {
+  transform: translateY(-1.5px) scale(1.06);
+  box-shadow:
+    0 3px 0 0.5px rgba(0, 0, 0, 0.1),
+    0 7px 16px -2px oklch(0.5 0.22 305 / 0.35);
+}
+
+/* Distinctive colorful washi tape strips per section */
+.washi-tape {
+  position: absolute;
+  top: -11px;
+  left: 28px;
+  height: 22px;
+  width: 95px;
+  border-left: 2px dashed rgba(255, 255, 255, 0.85);
+  border-right: 2px dashed rgba(255, 255, 255, 0.85);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  transform: rotate(-2.5deg);
+  pointer-events: none;
+  z-index: 10;
+  backdrop-filter: blur(3px);
+}
+.washi-tape-pink {
+  background: linear-gradient(90deg, oklch(0.9 0.14 340 / 0.75), oklch(0.88 0.12 300 / 0.75));
+}
+.washi-tape-peach {
+  background: linear-gradient(90deg, oklch(0.92 0.15 65 / 0.8), oklch(0.88 0.15 40 / 0.8));
+  transform: rotate(1.5deg);
+}
+.washi-tape-violet {
+  background: linear-gradient(90deg, oklch(0.9 0.13 285 / 0.8), oklch(0.88 0.14 260 / 0.8));
+  transform: rotate(-1.8deg);
+}
+.washi-tape-mint {
+  background: linear-gradient(90deg, oklch(0.92 0.14 165 / 0.8), oklch(0.88 0.13 190 / 0.8));
+  transform: rotate(2deg);
+}
+
+/* Rainbow animated text */
+@keyframes rainbow-sweep {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.text-rainbow {
+  background: linear-gradient(
+    135deg,
+    oklch(0.65 0.28 340),
+    oklch(0.68 0.26 40),
+    oklch(0.65 0.24 165),
+    oklch(0.58 0.28 290)
+  );
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: rainbow-sweep 8s ease infinite;
+}
+
+@keyframes sticker-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--r, 0deg));
+  }
+  50% {
+    transform: translateY(-14px) rotate(calc(var(--r, 0deg) + 6deg));
+  }
+}
+.sticker-float {
+  animation: sticker-float 5s ease-in-out infinite;
+}
+
+@keyframes sticker-wiggle {
+  0%,
+  100% {
+    transform: rotate(var(--r, 0deg));
+  }
+  25% {
+    transform: rotate(calc(var(--r, 0deg) - 8deg)) scale(1.12);
+  }
+  75% {
+    transform: rotate(calc(var(--r, 0deg) + 8deg)) scale(1.12);
+  }
+}
+.sticker-wiggle:hover {
+  animation: sticker-wiggle 0.35s ease-in-out;
+}
+
+/* Subtle dot paper pattern for paste box */
+.bg-notebook-dots {
+  background-image: radial-gradient(oklch(0.7 0.12 315 / 0.3) 1.3px, transparent 1.3px);
+  background-size: 18px 18px;
+}
+
+/* Pastel candy badge accents */
+.badge-candy-berry {
+  background: linear-gradient(135deg, oklch(0.95 0.08 340), oklch(0.92 0.1 325));
+  color: oklch(0.4 0.22 340);
+  border: 1.5px solid oklch(0.85 0.12 340);
+}
+.badge-candy-peach {
+  background: linear-gradient(135deg, oklch(0.96 0.09 60), oklch(0.93 0.1 45));
+  color: oklch(0.42 0.2 45);
+  border: 1.5px solid oklch(0.86 0.12 45);
+}
+.badge-candy-mint {
+  background: linear-gradient(135deg, oklch(0.96 0.08 165), oklch(0.92 0.1 175));
+  color: oklch(0.38 0.18 165);
+  border: 1.5px solid oklch(0.85 0.12 165);
+}
+.badge-candy-violet {
+  background: linear-gradient(135deg, oklch(0.95 0.08 285), oklch(0.92 0.1 270));
+  color: oklch(0.4 0.22 285);
+  border: 1.5px solid oklch(0.85 0.12 285);
+}
+.badge-candy-sun {
+  background: linear-gradient(135deg, oklch(0.97 0.1 95), oklch(0.94 0.12 85));
+  color: oklch(0.42 0.18 85);
+  border: 1.5px solid oklch(0.86 0.14 85);
+}

@@ -85,10 +85,10 @@ https://srv5.example-cdn.com/dl/BigArchive.zip.002
 https://srv6.example-cdn.com/get?id=77&filename=Notes.pdf`;
 
 const KIND_STYLE: Record<Kind, string> = {
-  movie: "bg-fuchsia-100 text-fuchsia-700 border-fuchsia-300",
-  series: "bg-violet-100 text-violet-700 border-violet-300",
-  zip: "bg-amber-100 text-amber-700 border-amber-300",
-  other: "bg-sky-100 text-sky-700 border-sky-300",
+  movie: "badge-candy-berry font-black",
+  series: "badge-candy-violet font-black",
+  zip: "badge-candy-sun font-black",
+  other: "badge-candy-mint font-black",
 };
 const CELL_EMOJI: Record<string, string> = {
   movie: "🎬",
@@ -1175,29 +1175,21 @@ function Home() {
 
       {/* Hero Section */}
       <div className="relative mx-auto max-w-content px-4 pt-8 pb-5">
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3.5">
           <div className="flex flex-wrap items-center gap-2 text-xs font-bold">
-            <span className="sticker-badge bg-fuchsia-100/90 text-fuchsia-800 px-3 py-1">
-              🎬 Movies isolated
-            </span>
-            <span className="sticker-badge bg-violet-100/90 text-violet-800 px-3 py-1">
-              ⚡ Parallel xargs
-            </span>
-            <span className="sticker-badge bg-amber-100/90 text-amber-800 px-3 py-1">
-              🗜️ Auto unpack
-            </span>
-            <span className="sticker-badge bg-emerald-100/90 text-emerald-800 px-3 py-1">
+            <span className="sticker-badge badge-candy-berry px-3.5 py-1">🎬 Movies isolated</span>
+            <span className="sticker-badge badge-candy-violet px-3.5 py-1">⚡ Parallel xargs</span>
+            <span className="sticker-badge badge-candy-sun px-3.5 py-1">🗜️ Auto unpack</span>
+            <span className="sticker-badge badge-candy-mint px-3.5 py-1">
               ✨ Content-Disposition
             </span>
+            <span className="sticker-badge badge-candy-peach px-3.5 py-1">🧁 100% in-browser</span>
           </div>
 
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div className="max-w-2xl">
               <h1 className="font-display text-4xl sm:text-5xl font-black tracking-tight text-foreground">
-                Turn messy links into{" "}
-                <span className="bg-gradient-to-r from-fuchsia-600 via-purple-600 to-violet-700 bg-clip-text text-transparent">
-                  Colab cells
-                </span>
+                Turn messy links into <span className="text-rainbow">Colab cells</span>
                 <span
                   className="sticker ml-2 text-3xl align-middle"
                   style={{ transform: "rotate(12deg)" }}
@@ -1205,7 +1197,7 @@ function Home() {
                   ✨
                 </span>
               </h1>
-              <p className="mt-1.5 text-sm sm:text-base text-muted-foreground">
+              <p className="mt-1.5 text-sm sm:text-base font-medium text-muted-foreground">
                 Paste download links — even glued together with no spaces. Get clean, organized,
                 ready-to-run Colab cells with wget and smart episode grouping.
               </p>
@@ -1215,10 +1207,10 @@ function Home() {
               <button
                 disabled={nextIdx < 0}
                 onClick={() => copyCell(nextIdx)}
-                className="lp-btn-pri flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold shadow-md disabled:opacity-40"
+                className="lp-btn-pri flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-black shadow-md disabled:opacity-40"
               >
-                <Sparkles className="size-4" />
-                {nextIdx < 0 ? "All copied" : `Copy next cell (${nextIdx + 1}/${cells.length})`}
+                <Sparkles className="size-4 animate-spin-slow" />
+                {nextIdx < 0 ? "All copied ✨" : `Copy next cell (${nextIdx + 1}/${cells.length})`}
               </button>
             </div>
           </div>
@@ -1228,30 +1220,33 @@ function Home() {
       <main className="relative mx-auto grid max-w-content grid-cols-[minmax(0,1fr)] gap-6 px-4 pb-28 lg:pb-16 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
         {/* ---------- left: input + options + links ---------- */}
         <div className="flex min-w-0 flex-col gap-6">
-          <section id="step-paste" className="lp-card p-5 sm:p-6">
-            <Corner emoji="🔮" />
+          <section id="step-paste" className="lp-card card-theme-berry p-5 sm:p-6">
+            <Corner emoji="🔮" washi="pink" />
             <StepHeader
               n="1"
               title="Paste links"
               subtitle="Paste one or more URLs — spaces and newlines are optional"
+              variant="berry"
             >
               <div className="flex items-center gap-1.5">
                 <button
-                  className="sticker-badge bg-white px-3 py-1 text-xs font-bold text-foreground hover:bg-purple-50"
+                  className="sticker-badge bg-white px-3 py-1 text-xs font-bold text-foreground hover:bg-pink-50 hover:text-pink-600 transition-colors"
                   onClick={() => {
                     setInput(SAMPLE);
                     setOff(new Set());
+                    toast.success("Loaded sample links! 🔮");
                   }}
                 >
-                  <Wand2 className="mr-1 inline size-3.5 text-purple-600" />
+                  <Wand2 className="mr-1 inline size-3.5 text-pink-600" />
                   Try sample
                 </button>
                 <button
-                  className="sticker-badge bg-white px-3 py-1 text-xs font-bold text-muted-foreground hover:text-destructive hover:bg-rose-50 disabled:opacity-40"
+                  className="sticker-badge bg-white px-3 py-1 text-xs font-bold text-muted-foreground hover:text-destructive hover:bg-rose-50 disabled:opacity-40 transition-colors"
                   disabled={!input}
                   onClick={() => {
                     setInput("");
                     setOff(new Set());
+                    toast("Links cleared 🫧");
                   }}
                 >
                   <Trash2 className="mr-1 inline size-3.5" />
@@ -1270,16 +1265,16 @@ function Home() {
                 placeholder={
                   "https://…/Movie.2024.mkvhttps://…/Show.S01E01.mkv?token=…\n\nOptional: put a file name on the line above a link."
                 }
-                className="lp-code lp-scroll bg-notebook-dots h-48 w-full resize-y rounded-2xl border-[1.5px] border-purple-200/90 bg-white/95 p-3.5 text-base leading-relaxed sm:text-[13px] outline-none placeholder:text-purple-300 focus:border-primary focus:ring-4 focus:ring-primary/15 shadow-inner"
+                className="lp-code lp-scroll bg-notebook-dots h-48 w-full resize-y rounded-2xl border-2 border-pink-200/90 bg-white/95 p-3.5 text-base leading-relaxed sm:text-[13px] outline-none placeholder:text-pink-300 focus:border-pink-500 focus:ring-4 focus:ring-pink-500/20 shadow-inner font-mono text-purple-950 font-medium"
               />
               <div className="absolute right-2.5 bottom-3 flex flex-col gap-1.5">
                 <button
                   type="button"
                   aria-label="Go to start of links"
                   onClick={() => jump(false)}
-                  className="rounded-full border border-purple-200 bg-white p-2 shadow-xs hover:bg-purple-50 hover:scale-105 active:scale-95 transition-all"
+                  className="rounded-full border border-pink-200 bg-white p-2 shadow-xs hover:bg-pink-50 hover:scale-105 active:scale-95 transition-all"
                 >
-                  <ArrowUpToLine className="size-4 text-purple-700" />
+                  <ArrowUpToLine className="size-4 text-pink-700" />
                 </button>
                 <button
                   type="button"
@@ -1293,7 +1288,7 @@ function Home() {
             </div>
 
             <div className="mt-3.5 flex flex-wrap gap-2 text-xs">
-              <Stat n={items.length} label="total links" emoji="🔗" />
+              <Stat n={items.length} label="total links" emoji="🔗" variant="default" />
               <Stat n={queryCount} label="with ?query → -O name" emoji="⚡" variant="query" />
               <Stat
                 n={items.length - queryCount}
@@ -1325,12 +1320,13 @@ function Home() {
             </div>
           </section>
 
-          <section id="step-options" className="lp-card p-5 sm:p-6">
-            <Corner emoji="🎀" />
+          <section id="step-options" className="lp-card card-theme-peach p-5 sm:p-6">
+            <Corner emoji="🎀" washi="peach" />
             <StepHeader
               n="2"
               title="Options"
               subtitle="Fine-tune grouping, parallel downloads, and command flags"
+              variant="peach"
             />
 
             {/* Scope: change settings for every link, or only the ticked ones */}
@@ -1596,12 +1592,13 @@ function Home() {
             </div>
           </section>
 
-          <section id="step-pick" className="lp-card p-5 sm:p-6">
-            <Corner emoji="🍇" />
+          <section id="step-pick" className="lp-card card-theme-violet p-5 sm:p-6">
+            <Corner emoji="🍇" washi="violet" />
             <StepHeader
               n="3"
               title="Pick links"
               subtitle="Filter and select links to include in the generated commands"
+              variant="violet"
             >
               <div className="flex flex-wrap gap-1.5 text-xs">
                 <button
@@ -1865,13 +1862,14 @@ function Home() {
         {/* ---------- right: output ---------- */}
         <section
           id="step-commands"
-          className="lp-card min-w-0 self-start p-5 sm:p-6 lg:sticky lg:top-18"
+          className="lp-card card-theme-mint min-w-0 self-start p-5 sm:p-6 lg:sticky lg:top-18"
         >
-          <Corner emoji="✨" />
+          <Corner emoji="✨" washi="mint" />
           <StepHeader
             n="4"
             title="Commands"
             subtitle={`${cells.length} ready cell${cells.length === 1 ? "" : "s"} · ${view.length} link${view.length === 1 ? "" : "s"}`}
+            variant="mint"
           >
             <div className="flex w-full sm:w-auto items-center gap-1.5">
               <button
@@ -1966,31 +1964,118 @@ function StepHeader({
   n,
   title,
   subtitle,
+  variant = "berry",
   children,
 }: {
   n: string;
   title: string;
   subtitle?: string;
+  variant?: "berry" | "peach" | "violet" | "mint";
   children?: React.ReactNode;
 }) {
+  const badgeGradient = {
+    berry: "from-pink-500 via-rose-500 to-fuchsia-600 shadow-pink-200",
+    peach: "from-amber-400 via-orange-500 to-rose-500 shadow-orange-200",
+    violet: "from-purple-500 via-violet-600 to-indigo-600 shadow-purple-200",
+    mint: "from-emerald-400 via-teal-500 to-cyan-600 shadow-teal-200",
+  }[variant];
+
+  const borderLine = {
+    berry: "border-pink-200/90",
+    peach: "border-amber-200/90",
+    violet: "border-violet-200/90",
+    mint: "border-teal-200/90",
+  }[variant];
+
   return (
-    <div className="mb-3.5 flex flex-wrap items-center justify-between gap-2 border-b border-purple-100/80 pb-3">
-      <div className="flex items-center gap-2.5">
+    <div
+      className={cn(
+        "mb-4 flex flex-wrap items-center justify-between gap-2 border-b pb-3.5",
+        borderLine,
+      )}
+    >
+      <div className="flex items-center gap-3">
         <span
-          className="sticker-badge size-8 bg-gradient-to-br from-fuchsia-500 via-purple-600 to-violet-700 text-sm font-black text-white shadow-sm"
-          style={{ transform: "rotate(-3deg)" }}
+          className={cn(
+            "sticker-badge size-8.5 bg-gradient-to-br text-sm font-black text-white shadow-sm",
+            badgeGradient,
+          )}
+          style={{ transform: "rotate(-4deg)" }}
         >
           {n}
         </span>
         <div>
-          <h2 className="font-display text-xl font-bold tracking-tight text-foreground">{title}</h2>
-          {subtitle && <p className="text-xs text-muted-foreground">{subtitle}</p>}
+          <h2 className="font-display text-xl sm:text-2xl font-black tracking-tight text-foreground flex items-center gap-2">
+            {title}
+          </h2>
+          {subtitle && <p className="text-xs font-semibold text-muted-foreground">{subtitle}</p>}
         </div>
       </div>
       {children && <div className="flex flex-wrap items-center gap-2">{children}</div>}
     </div>
   );
 }
+
+const KIND_THEMES: Record<
+  string,
+  {
+    border: string;
+    headerBg: string;
+    badgeBg: string;
+    pillBg: string;
+    tagText: string;
+    tagIcon: string;
+  }
+> = {
+  movie: {
+    border: "border-pink-300/90 hover:border-pink-400",
+    headerBg: "bg-gradient-to-r from-pink-100/95 via-rose-50/80 to-white",
+    badgeBg: "bg-gradient-to-br from-pink-500 to-rose-600 text-white",
+    pillBg: "bg-pink-100 text-pink-700 border-pink-300",
+    tagText: "MOVIE",
+    tagIcon: "🎬",
+  },
+  wget: {
+    border: "border-emerald-300/90 hover:border-emerald-400",
+    headerBg: "bg-gradient-to-r from-emerald-100/95 via-teal-50/80 to-white",
+    badgeBg: "bg-gradient-to-br from-emerald-500 to-teal-600 text-white",
+    pillBg: "bg-emerald-100 text-emerald-800 border-emerald-300",
+    tagText: "PARALLEL",
+    tagIcon: "⚡",
+  },
+  zip: {
+    border: "border-amber-300/90 hover:border-amber-400",
+    headerBg: "bg-gradient-to-r from-amber-100/95 via-orange-50/80 to-white",
+    badgeBg: "bg-gradient-to-br from-amber-500 to-orange-600 text-white",
+    pillBg: "bg-amber-100 text-amber-800 border-amber-300",
+    tagText: "ZIP EXTRACT",
+    tagIcon: "🗜️",
+  },
+  rar: {
+    border: "border-orange-300/90 hover:border-orange-400",
+    headerBg: "bg-gradient-to-r from-orange-100/95 via-amber-50/80 to-white",
+    badgeBg: "bg-gradient-to-br from-orange-500 to-red-500 text-white",
+    pillBg: "bg-orange-100 text-orange-800 border-orange-300",
+    tagText: "RAR EXTRACT",
+    tagIcon: "🗜️",
+  },
+  split: {
+    border: "border-violet-300/90 hover:border-violet-400",
+    headerBg: "bg-gradient-to-r from-violet-100/95 via-purple-50/80 to-white",
+    badgeBg: "bg-gradient-to-br from-violet-500 to-purple-600 text-white",
+    pillBg: "bg-violet-100 text-violet-800 border-violet-300",
+    tagText: "SPLIT ARCHIVE",
+    tagIcon: "🧩",
+  },
+  plain: {
+    border: "border-sky-300/90 hover:border-sky-400",
+    headerBg: "bg-gradient-to-r from-sky-100/95 via-cyan-50/80 to-white",
+    badgeBg: "bg-gradient-to-br from-sky-500 to-blue-600 text-white",
+    pillBg: "bg-sky-100 text-sky-800 border-sky-300",
+    tagText: "URL LIST",
+    tagIcon: "🔗",
+  },
+};
 
 function CellCard({
   cell,
@@ -2003,30 +2088,37 @@ function CellCard({
   copied: boolean;
   onCopy: () => void;
 }) {
+  const theme = KIND_THEMES[cell.kind] ?? KIND_THEMES.plain!;
+
   return (
     <div
       className={cn(
-        "group relative overflow-hidden rounded-2xl border-[1.5px] transition-all duration-200",
+        "group relative overflow-hidden rounded-2xl border-2 transition-all duration-200 shadow-xs",
         copied
-          ? "border-emerald-300 bg-emerald-50/50 shadow-xs"
-          : "border-purple-200/80 bg-white/95 hover:border-purple-300 hover:shadow-md",
+          ? "border-emerald-400 bg-emerald-50/70 shadow-emerald-100 shadow-md scale-[1.01]"
+          : cn(theme.border, "bg-white/95 hover:shadow-md hover:scale-[1.005]"),
       )}
     >
       <div
         className={cn(
-          "flex items-center gap-2 border-b px-3.5 py-2 transition-colors",
+          "flex items-center gap-2.5 border-b px-3.5 py-2.5 transition-colors",
           copied
-            ? "border-emerald-200 bg-gradient-to-r from-emerald-100/70 to-teal-50/70"
-            : "border-purple-100 bg-gradient-to-r from-purple-50/80 via-fuchsia-50/40 to-white",
+            ? "border-emerald-200 bg-gradient-to-r from-emerald-200/80 via-teal-100/70 to-emerald-50"
+            : theme.headerBg,
         )}
       >
         <span
-          className="sticker text-lg"
+          className="sticker text-xl"
           style={{ transform: "rotate(-4deg)", "--r": "-4deg" } as CSSProperties}
         >
           {CELL_EMOJI[cell.kind] ?? "📄"}
         </span>
-        <span className="sticker-badge bg-white px-2 py-0.5 text-[11px] font-black text-purple-600 shadow-2xs">
+        <span
+          className={cn(
+            "sticker-badge px-2 py-0.5 text-[11px] font-black shadow-2xs",
+            copied ? "bg-emerald-600 text-white" : theme.badgeBg,
+          )}
+        >
           #{n}
         </span>
         <span
@@ -2035,16 +2127,27 @@ function CellCard({
         >
           {cell.label}
         </span>
+        <span
+          className={cn(
+            "hidden sm:inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wider border",
+            theme.pillBg,
+          )}
+        >
+          <span>{theme.tagIcon}</span>
+          <span>{theme.tagText}</span>
+        </span>
         <button
           onClick={onCopy}
           className={cn(
-            "flex items-center gap-1.5 rounded-full px-3.5 py-1 text-xs font-bold transition-all active:scale-95 shadow-xs shrink-0",
-            copied ? "bg-emerald-600 text-white shadow-emerald-200" : "lp-btn-pri hover:scale-105",
+            "flex items-center gap-1.5 rounded-full px-3.5 py-1 text-xs font-black transition-all active:scale-95 shadow-xs shrink-0",
+            copied
+              ? "bg-emerald-600 text-white shadow-emerald-200 ring-2 ring-emerald-300"
+              : "lp-btn-pri hover:scale-105",
           )}
         >
           {copied ? (
             <>
-              <Check className="size-3.5" />
+              <Check className="size-3.5 stroke-[3]" />
               <span>Copied!</span>
             </>
           ) : (
@@ -2056,7 +2159,7 @@ function CellCard({
         </button>
       </div>
       <div className="relative p-2.5 sm:p-3 bg-purple-50/15">
-        <pre className="lp-code lp-scroll max-h-72 max-w-full overflow-auto rounded-xl bg-slate-900/4 p-3 text-[11.5px] leading-relaxed break-all whitespace-pre-wrap text-purple-950 font-medium">
+        <pre className="lp-code lp-scroll max-h-72 max-w-full overflow-auto rounded-xl bg-slate-900/5 p-3 text-[11.5px] leading-relaxed break-all whitespace-pre-wrap text-purple-950 font-medium">
           {cell.text}
         </pre>
       </div>
@@ -2080,7 +2183,7 @@ function Toggle({
   return (
     <label
       className={cn(
-        "flex cursor-pointer items-center justify-between gap-3 rounded-xl p-1.5 hover:bg-purple-50/60 transition-colors",
+        "flex cursor-pointer items-center justify-between gap-3 rounded-xl p-2 hover:bg-purple-50/80 transition-colors border border-transparent hover:border-purple-200/50",
         disabled && "opacity-45 pointer-events-none",
       )}
     >
@@ -2110,34 +2213,47 @@ function Stat({
   variant?: "default" | "query" | "clean" | "warning";
 }) {
   const styles = {
-    default: "bg-white/95 text-foreground border-purple-200/80",
-    query: "bg-amber-50 text-amber-900 border-amber-200",
-    clean: "bg-emerald-50 text-emerald-900 border-emerald-200",
-    warning: "bg-rose-50 text-rose-900 border-rose-200",
+    default: "badge-candy-berry",
+    query: "badge-candy-sun",
+    clean: "badge-candy-mint",
+    warning: "badge-candy-peach",
   }[variant];
 
   return (
     <span
       className={cn(
-        "sticker-badge px-3 py-1 text-xs font-semibold shadow-2xs transition-transform hover:scale-105",
+        "sticker-badge px-3.5 py-1 text-xs font-bold shadow-xs transition-transform hover:scale-105",
         styles,
       )}
     >
-      {emoji && <span className="mr-1 text-xs">{emoji}</span>}
-      <b className="font-black text-purple-700 tabular-nums">{n}</b>{" "}
-      <span className="text-muted-foreground">{label}</span>
+      {emoji && <span className="mr-1.5 text-sm">{emoji}</span>}
+      <b className="font-black tabular-nums">{n}</b> <span className="opacity-80">{label}</span>
     </span>
   );
 }
 
-function Corner({ emoji }: { emoji: string }) {
+function Corner({
+  emoji,
+  washi = "pink",
+}: {
+  emoji: string;
+  washi?: "pink" | "peach" | "violet" | "mint";
+}) {
+  const washiClass = {
+    pink: "washi-tape-pink",
+    peach: "washi-tape-peach",
+    violet: "washi-tape-violet",
+    mint: "washi-tape-mint",
+  }[washi];
+
   return (
     <>
-      <div className="washi-tape" />
+      <div className={cn("washi-tape", washiClass)} />
       <span
-        className="sticker sticker-wiggle absolute -top-4 -right-2 z-20 cursor-pointer text-3xl transition-transform hover:scale-125"
+        onClick={() => toast(`Sticker ${emoji} clicked! ✨`)}
+        className="sticker sticker-wiggle absolute -top-4 -right-2 z-20 cursor-pointer text-3xl sm:text-4xl transition-transform hover:scale-130 active:scale-95"
         style={{ transform: "rotate(12deg)", "--r": "12deg" } as CSSProperties}
-        title="Cute sticker!"
+        title="Tap sticker!"
       >
         {emoji}
       </span>
@@ -2166,7 +2282,11 @@ function Stickers() {
       {FLOATERS.map(([e, left, top, r], i) => (
         <span
           key={i}
-          className="sticker sticker-float absolute text-4xl opacity-80 transition-opacity hover:opacity-100"
+          onClick={(ev) => {
+            ev.stopPropagation();
+            toast(`Tapped floating sticker ${e}! 💖`);
+          }}
+          className="sticker sticker-float pointer-events-auto cursor-pointer absolute text-4xl opacity-80 transition-opacity hover:opacity-100 hover:scale-130"
           style={
             {
               left,

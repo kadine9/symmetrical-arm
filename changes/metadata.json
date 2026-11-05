@@ -1,0 +1,6 @@
+{
+  "name": "LinkPop - Batch Link Downloader & Organizer",
+  "description": "Download links to Colab cells, organize episode files, batch parallel downloads, and generate shell scripts.",
+  "request_feedback": false,
+  "capabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

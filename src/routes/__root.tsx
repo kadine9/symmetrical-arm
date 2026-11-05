@@ -79,10 +79,23 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "LinkPop" },
-      { name: "description", content: "Download links to Colab cells" },
-      { name: "author", content: "Lovable" },
+      { title: "LinkPop - Batch Link Downloader & Organizer" },
+      {
+        name: "description",
+        content:
+          "Download links to Colab cells, organize episode files, batch parallel downloads, and generate shell scripts.",
+      },
+      { name: "author", content: "LinkPop" },
       { property: "og:type", content: "website" },
+      {
+        property: "og:title",
+        content: "LinkPop - Batch Link Downloader & Organizer",
+      },
+      {
+        property: "og:description",
+        content:
+          "Download links to Colab cells, organize episode files, batch parallel downloads, and generate shell scripts.",
+      },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },
     ],
